@@ -1,0 +1,611 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #0f0f0f;
+    color: #fff;
+    overflow: hidden;
+}
+
+.game-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+}
+
+/* ============ MATCH HEADER ============ */
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 2px solid #ffd700;
+    gap: 20px;
+    min-height: 100px;
+}
+
+.team-info {
+    flex: 1;
+    text-align: center;
+}
+
+.team-info.home-team {
+    border-right: 1px solid #555;
+}
+
+.team-info.away-team {
+    border-left: 1px solid #555;
+}
+
+.team-logo {
+    font-size: 14px;
+    font-weight: bold;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.team-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.formation {
+    font-size: 12px;
+    color: #aaa;
+    font-style: italic;
+}
+
+.match-stats {
+    flex: 1;
+    text-align: center;
+}
+
+.score-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.score {
+    min-width: 60px;
+}
+
+.home-score {
+    color: #1e3a8a;
+}
+
+.away-score {
+    color: #dc2626;
+}
+
+.vs {
+    color: #ffd700;
+    font-size: 28px;
+}
+
+.match-time {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 5px;
+}
+
+.match-status {
+    font-size: 12px;
+    color: #90ee90;
+    font-weight: bold;
+}
+
+/* ============ FIELD CONTAINER ============ */
+.field-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #2d5016 0%, #1a3009 100%);
+    border: 3px solid #333;
+    overflow: hidden;
+    position: relative;
+}
+
+.football-field {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+
+.player {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.player:hover {
+    stroke: #ffd700;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6)) !important;
+}
+
+.player-main {
+    animation: pulse 1.5s infinite;
+    filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.8));
+}
+
+.player-highlight {
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        r: 20;
+    }
+    50% {
+        opacity: 0.8;
+        r: 22;
+    }
+}
+
+.ball {
+    animation: ball-movement 4s infinite ease-in-out;
+}
+
+@keyframes ball-movement {
+    0%, 100% {
+        cx: 650;
+        cy: 350;
+    }
+    50% {
+        cx: 500;
+        cy: 300;
+    }
+}
+
+/* ============ DASHBOARD TOP ============ */
+.dashboard-top {
+    display: flex;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 1px solid #333;
+    gap: 20px;
+    align-items: center;
+    min-height: 90px;
+}
+
+.goal-frame {
+    padding: 15px 20px;
+    border-left: 5px solid;
+    background: rgba(30, 58, 138, 0.1);
+    border-radius: 5px;
+    min-width: 250px;
+}
+
+.goal-frame.home-goal {
+    border-left-color: #1e3a8a;
+}
+
+.goal-frame.away-goal {
+    border-left-color: #dc2626;
+}
+
+.goal-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 8px;
+}
+
+.goal-info {
+    font-size: 13px;
+}
+
+.scorer {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.assist {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.match-info-panel {
+    display: flex;
+    gap: 30px;
+    flex: 1;
+    padding: 0 20px;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-item .label {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.info-item .value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.player-spotlight {
+    padding: 15px 20px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 5px;
+    border: 1px solid #ffd700;
+    min-width: 200px;
+}
+
+.spotlight-title {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.spotlight-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 3px;
+}
+
+.spotlight-pos {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* ============ DASHBOARD BOTTOM ============ */
+.dashboard-bottom {
+    display: flex;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border-bottom: 1px solid #333;
+    gap: 20px;
+    align-items: center;
+    min-height: 110px;
+}
+
+.controls-panel {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    min-width: 280px;
+    padding: 10px;
+    background: rgba(30, 58, 138, 0.2);
+    border-radius: 5px;
+    border: 1px solid #1e3a8a;
+}
+
+.control-group {
+    text-align: center;
+    padding: 8px;
+}
+
+.control-title {
+    font-size: 10px;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.control-key {
+    font-size: 14px;
+    font-weight: bold;
+    color: #90ee90;
+    font-family: monospace;
+}
+
+.stats-panel {
+    flex: 1;
+    padding: 10px 20px;
+    border-left: 1px solid #444;
+    border-right: 1px solid #444;
+}
+
+.player-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+}
+
+.stat-label {
+    min-width: 90px;
+    color: #aaa;
+}
+
+.stat-bar {
+    flex: 1;
+    height: 8px;
+    background: #333;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #90ee90, #ffd700);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.team-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    min-width: 280px;
+}
+
+.team-stat {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.team-badge {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+.team-badge.home {
+    background: #1e3a8a;
+}
+
+.team-badge.away {
+    background: #dc2626;
+}
+
+.stat-cols {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.small-label {
+    font-size: 10px;
+    color: #888;
+    margin-bottom: 4px;
+}
+
+.big-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.divider-v {
+    width: 1px;
+    height: 40px;
+    background: #444;
+}
+
+/* ============ BOTTOM CONTROLS ============ */
+.bottom-controls {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    background: rgba(0, 0, 0, 0.9);
+    border-top: 2px solid #333;
+    justify-content: center;
+    min-height: 60px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: 1px solid #555;
+    background: rgba(45, 45, 45, 0.8);
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background: #1e3a8a;
+    border-color: #1e3a8a;
+    box-shadow: 0 0 10px rgba(30, 58, 138, 0.6);
+}
+
+.btn-tactics:hover {
+    background: #d97706;
+    border-color: #d97706;
+}
+
+.btn-stats:hover {
+    background: #16a34a;
+    border-color: #16a34a;
+}
+
+.btn-agent:hover {
+    background: #7c3aed;
+    border-color: #7c3aed;
+}
+
+.btn-exit:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+}
+
+/* ============ COACH REACTION ============ */
+.coach-reaction {
+    position: fixed;
+    bottom: 80px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 18px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    animation: slideIn 0.5s ease;
+    max-width: 300px;
+}
+
+.reaction-icon {
+    font-size: 24px;
+    animation: bounce 0.6s ease infinite;
+}
+
+.reaction-text {
+    font-size: 13px;
+    color: #fff;
+    font-weight: bold;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1400px) {
+    .match-header {
+        padding: 12px 20px;
+        min-height: 80px;
+    }
+
+    .dashboard-top {
+        flex-wrap: wrap;
+        min-height: auto;
+        gap: 15px;
+    }
+
+    .goal-frame {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .dashboard-bottom {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .controls-panel {
+        grid-template-columns: repeat(2, 1fr);
+        min-width: auto;
+        flex: 1;
+    }
+
+    .stats-panel {
+        flex: 0 1 250px;
+    }
+
+    .team-stats {
+        flex: 1;
+        min-width: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        font-size: 14px;
+    }
+
+    .score-display {
+        font-size: 36px;
+        gap: 15px;
+    }
+
+    .match-header {
+        flex-wrap: wrap;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .team-info {
+        flex: 0 1 45%;
+    }
+
+    .match-stats {
+        flex: 0 1 100%;
+    }
+
+    .match-time {
+        font-size: 18px;
+    }
+
+    .dashboard-top,
+    .dashboard-bottom {
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .controls-panel {
+        width: 100%;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .match-info-panel {
+        width: 100%;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bottom-controls {
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        min-width: 80px;
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greatest Dream - Football Career Mode</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header with Match Info -->
+        <div class="match-header">
+            <div class="team-info home-team">
+                <div class="team-logo">HOME</div>
+                <div class="team-name">City FC</div>
+                <div class="formation">4-2-3-1</div>
+            </div>
+            <div class="match-stats">
+                <div class="score-display">
+                    <span class="score home-score">2</span>
+                    <span class="vs">-</span>
+                    <span class="score away-score">1</span>
+                </div>
+                <div class="match-time">45'+2</div>
+                <div class="match-status">SECOND HALF</div>
+            </div>
+            <div class="team-info away-team">
+                <div class="team-logo">AWAY</div>
+                <div class="team-name">United FC</div>
+                <div class="formation">4-3-3</div>
+            </div>
+        </div>
+
+        <!-- Main Football Field -->
+        <div class="field-container">
+            <svg class="football-field" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+                <!-- Field Background -->
+                <rect width="1200" height="800" fill="#2d5016"/>
+                
+                <!-- Field Lines -->
+                <line x1="600" y1="0" x2="600" y2="800" stroke="white" stroke-width="2"/>
+                <line x1="0" y1="400" x2="1200" y2="400" stroke="white" stroke-width="2"/>
+                
+                <!-- Center Circle -->
+                <circle cx="600" cy="400" r="100" fill="none" stroke="white" stroke-width="2"/>
+                <circle cx="600" cy="400" r="6" fill="white"/>
+                
+                <!-- Penalty Areas -->
+                <rect x="0" y="250" width="200" height="300" fill="none" stroke="white" stroke-width="2"/>
+                <rect x="1000" y="250" width="200" height="300" fill="none" stroke="white" stroke-width="2"/>
+                
+                <!-- Goal Areas -->
+                <rect x="0" y="325" width="100" height="150" fill="none" stroke="white" stroke-width="2"/>
+                <rect x="1100" y="325" width="100" height="150" fill="none" stroke="white" stroke-width="2"/>
+                
+                <!-- Corner Arcs -->
+                <circle cx="0" cy="0" r="40" fill="none" stroke="white" stroke-width="2"/>
+                <circle cx="1200" cy="0" r="40" fill="none" stroke="white" stroke-width="2"/>
+                <circle cx="0" cy="800" r="40" fill="none" stroke="white" stroke-width="2"/>
+                <circle cx="1200" cy="800" r="40" fill="none" stroke="white" stroke-width="2"/>
+                
+                <!-- Goals -->
+                <rect x="-20" y="350" width="20" height="100" fill="none" stroke="yellow" stroke-width="3"/>
+                <rect x="1200" y="350" width="20" height="100" fill="none" stroke="yellow" stroke-width="3"/>
+                
+                <!-- HOME TEAM PLAYERS (Blue) - 4-2-3-1 Formation -->
+                <g id="home-team">
+                    <!-- Goalkeeper -->
+                    <circle cx="80" cy="400" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="GK"/>
+                    <text x="80" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">1</text>
+                    
+                    <!-- Defenders (4) -->
+                    <circle cx="250" cy="200" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="250" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="bold">2</text>
+                    
+                    <circle cx="250" cy="400" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="250" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">4</text>
+                    
+                    <circle cx="250" cy="600" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="250" y="605" text-anchor="middle" fill="white" font-size="12" font-weight="bold">5</text>
+                    
+                    <circle cx="200" cy="300" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="LB"/>
+                    <text x="200" y="305" text-anchor="middle" fill="white" font-size="12" font-weight="bold">3</text>
+                    
+                    <circle cx="200" cy="500" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="RB"/>
+                    <text x="200" y="505" text-anchor="middle" fill="white" font-size="12" font-weight="bold">6</text>
+                    
+                    <!-- Midfielders (2) -->
+                    <circle cx="400" cy="350" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="CM"/>
+                    <text x="400" y="355" text-anchor="middle" fill="white" font-size="12" font-weight="bold">7</text>
+                    
+                    <circle cx="400" cy="450" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="CM"/>
+                    <text x="400" y="455" text-anchor="middle" fill="white" font-size="12" font-weight="bold">8</text>
+                    
+                    <!-- Attacking Midfielders (3) -->
+                    <circle cx="550" cy="200" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player player-highlight" data-player="LW"/>
+                    <text x="550" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="bold">10</text>
+                    
+                    <circle cx="550" cy="400" r="20" fill="#ffd700" stroke="white" stroke-width="3" class="player player-main" data-player="CAM"/>
+                    <text x="550" y="405" text-anchor="middle" fill="#000" font-size="12" font-weight="bold">11</text>
+                    
+                    <circle cx="550" cy="600" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="RW"/>
+                    <text x="550" y="605" text-anchor="middle" fill="white" font-size="12" font-weight="bold">9</text>
+                    
+                    <!-- Striker (1) -->
+                    <circle cx="700" cy="400" r="20" fill="#1e3a8a" stroke="white" stroke-width="2" class="player" data-player="ST"/>
+                    <text x="700" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">12</text>
+                </g>
+                
+                <!-- AWAY TEAM PLAYERS (Red) - 4-3-3 Formation -->
+                <g id="away-team">
+                    <!-- Goalkeeper -->
+                    <circle cx="1120" cy="400" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="GK"/>
+                    <text x="1120" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">1</text>
+                    
+                    <!-- Defenders (4) -->
+                    <circle cx="950" cy="200" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="950" y="205" text-anchor="middle" fill="white" font-size="12" font-weight="bold">2</text>
+                    
+                    <circle cx="950" cy="400" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="950" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">4</text>
+                    
+                    <circle cx="950" cy="600" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CB"/>
+                    <text x="950" y="605" text-anchor="middle" fill="white" font-size="12" font-weight="bold">5</text>
+                    
+                    <circle cx="1000" cy="300" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="LB"/>
+                    <text x="1000" y="305" text-anchor="middle" fill="white" font-size="12" font-weight="bold">3</text>
+                    
+                    <circle cx="1000" cy="500" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="RB"/>
+                    <text x="1000" y="505" text-anchor="middle" fill="white" font-size="12" font-weight="bold">6</text>
+                    
+                    <!-- Midfielders (3) -->
+                    <circle cx="800" cy="250" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CM"/>
+                    <text x="800" y="255" text-anchor="middle" fill="white" font-size="12" font-weight="bold">7</text>
+                    
+                    <circle cx="800" cy="400" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CM"/>
+                    <text x="800" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">8</text>
+                    
+                    <circle cx="800" cy="550" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="CM"/>
+                    <text x="800" y="555" text-anchor="middle" fill="white" font-size="12" font-weight="bold">9</text>
+                    
+                    <!-- Forwards (3) -->
+                    <circle cx="650" cy="150" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="LW"/>
+                    <text x="650" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="bold">10</text>
+                    
+                    <circle cx="650" cy="400" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="ST"/>
+                    <text x="650" y="405" text-anchor="middle" fill="white" font-size="12" font-weight="bold">11</text>
+                    
+                    <circle cx="650" cy="650" r="20" fill="#dc2626" stroke="white" stroke-width="2" class="player" data-player="RW"/>
+                    <text x="650" y="655" text-anchor="middle" fill="white" font-size="12" font-weight="bold">12</text>
+                </g>
+                
+                <!-- Ball -->
+                <circle cx="650" cy="350" r="12" fill="white" class="ball" stroke="#000" stroke-width="1"/>
+            </svg>
+        </div>
+
+        <!-- Dashboard Row 1: Match Events -->
+        <div class="dashboard-top">
+            <div class="goal-frame home-goal">
+                <div class="goal-label">⚽ GOAL!</div>
+                <div class="goal-info">
+                    <div class="scorer">Marcus Johnson (45')</div>
+                    <div class="assist">Assist: Player Name</div>
+                </div>
+            </div>
+            <div class="match-info-panel">
+                <div class="info-item">
+                    <span class="label">Possession:</span>
+                    <span class="value">58%</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Shots:</span>
+                    <span class="value">8</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">Passes:</span>
+                    <span class="value">312</span>
+                </div>
+            </div>
+            <div class="player-spotlight">
+                <div class="spotlight-title">PLAYER ON BALL</div>
+                <div class="spotlight-name">Marcus Johnson</div>
+                <div class="spotlight-pos">CAM | City FC</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Row 2: Controls & Stats -->
+        <div class="dashboard-bottom">
+            <div class="controls-panel">
+                <div class="control-group">
+                    <div class="control-title">MOVEMENT</div>
+                    <div class="control-key">↑ ↓ ← →</div>
+                </div>
+                <div class="control-group">
+                    <div class="control-title">SHOOT</div>
+                    <div class="control-key">S (tap/hold)</div>
+                </div>
+                <div class="control-group">
+                    <div class="control-title">PASS</div>
+                    <div class="control-key">Z (tap/hold)</div>
+                </div>
+                <div class="control-group">
+                    <div class="control-title">TACKLE</div>
+                    <div class="control-key">Z+Hold / Z+Z</div>
+                </div>
+            </div>
+
+            <div class="stats-panel">
+                <div class="player-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">Fitness:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Form:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Coach Trust:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Morale:</span>
+                        <div class="stat-bar">
+                            <div class="stat-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-stats">
+                <div class="team-stat">
+                    <div class="team-badge home">HOME</div>
+                    <div class="stat-cols">
+                        <div class="stat-item">
+                            <span class="small-label">Goals</span>
+                            <span class="big-value">2</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="small-label">Shots on Target</span>
+                            <span class="big-value">6</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="divider-v"></div>
+                <div class="team-stat">
+                    <div class="team-badge away">AWAY</div>
+                    <div class="stat-cols">
+                        <div class="stat-item">
+                            <span class="small-label">Goals</span>
+                            <span class="big-value">1</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="small-label">Shots on Target</span>
+                            <span class="big-value">4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Control Panel -->
+        <div class="bottom-controls">
+            <button class="btn btn-pause">⏸ PAUSE</button>
+            <button class="btn btn-tactics">📊 TACTICS</button>
+            <button class="btn btn-stats">📈 STATS</button>
+            <button class="btn btn-agent">🤝 AGENT</button>
+            <button class="btn btn-exit">✕ EXIT</button>
+        </div>
+
+        <!-- Coach Reaction Panel -->
+        <div class="coach-reaction">
+            <div class="reaction-icon">🎯</div>
+            <div class="reaction-text">Great pass! Keep pushing forward!</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
