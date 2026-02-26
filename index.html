@@ -1,23 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Snake Highway</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greatest Dream - Football Career Mode</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div id="overlay">
-        <h1>Choose your snake</h1>
-        <div id="choices">
-            <div class="choice" data-type="normal">Normal Snake</div>
-            <div class="choice" data-type="cobra">Cobra</div>
-            <div class="choice" data-type="winged">Winged Snake</div>
-        </div>
-        <p>Click a snake to select and start. Press Space to start/pause during play.</p>
-    </div>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.dom.min.js"></script>
 
     <canvas id="game"></canvas>
 
@@ -28,6 +22,8 @@
     </div>
 
     <script src="main.js"></script>
+    <div id="ui-overlay"></div>
+    <script src="script.js"></script>
 </body>
 
 </html>
