@@ -7,14 +7,14 @@ window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; 
 
 // Game state
 let lanes = 5;
-let laneHeight = H / lanes;
-let laneCenters = () => Array.from({ length: lanes }, (_, i) => Math.floor((i + 0.5) * laneHeight));
+let laneWidth = W / lanes;
+let laneCenters = () => Array.from({ length: lanes }, (_, i) => Math.floor((i + 0.5) * laneWidth));
 let centers = laneCenters();
 
 let snake = {
     type: 'normal',
     lane: 2,
-    x: Math.floor(W * 0.2),
+    y: Math.floor(H * 0.8), // Start near bottom
     color: '#0f0',
     size: 14,
     length: 6,
@@ -35,21 +35,22 @@ let objects = [];
 let bigPointTimer = 0;
 
 function spawnObject() {
-    // spawn regular small points near center or sides of lanes
     let lane = Math.floor(Math.random() * lanes);
     let side = Math.random() < 0.6 ? 'middle' : 'side';
-    let obj = { x: W + 40 + Math.random() * 400, lane, r: side === 'middle' ? 8 : 10, type: 'point' };
+    let x = laneCenters()[lane];
+    let obj = { y: H + 40 + Math.random() * 400, x, r: side === 'middle' ? 8 : 10, type: 'point' };
     objects.push(obj);
 }
 
 function spawnBigPoint() {
     let lane = Math.floor(Math.random() * lanes);
-    objects.push({ x: W + 200, lane, r: 24, type: 'big' });
+    let x = laneCenters()[lane];
+    objects.push({ y: H + 200, x, r: 24, type: 'big' });
 }
 
 function resetSegments() {
     snake.segments = [];
-    for (let i = 0; i < snake.length; i++) snake.segments.push({ x: snake.x - i * (snake.size + 2), y: centers[snake.lane] });
+    for (let i = 0; i < snake.length; i++) snake.segments.push({ x: centers[snake.lane], y: snake.y + i * (snake.size + 2) });
 }
 
 resetSegments();
@@ -106,25 +107,25 @@ function update(dt) {
     bigPointTimer += dt;
     if (bigPointTimer > 800) { spawnBigPoint(); bigPointTimer = 0; }
 
-    // move objects left to simulate forward motion
+    // move objects downward to simulate upward highway motion
     let roadSpeed = snake.speed || snake.baseSpeed;
-    objects.forEach(o => o.x -= roadSpeed * dt);
-    objects = objects.filter(o => o.x > -100);
+    objects.forEach(o => o.y -= roadSpeed * dt);
+    objects = objects.filter(o => o.y > -100);
 
-    // move snake forward (x increases when not paused)
-    snake.x += roadSpeed * dt;
-    // wrap to make endless (when reaches right, push objects forward)
-    if (snake.x > W * 0.6) { // shift world
-        let shift = snake.x - W * 0.2;
-        snake.x = W * 0.2;
-        objects.forEach(o => o.x -= shift);
+    // move snake upward (y increases when not paused)
+    snake.y += roadSpeed * dt;
+    // wrap to make endless (when reaches bottom, push objects upward)
+    if (snake.y > H * 0.8) {
+        let shift = snake.y - H * 0.4;
+        snake.y = H * 0.4;
+        // Do NOT shift objects, so balls stay in lane
     }
 
     // smooth lane movement for head
-    let targetY = centers[snake.lane];
-    let headY = snake.segments[0].y;
-    headY += (targetY - headY) * 0.2;
-    snake.segments[0].y = headY;
+    let targetX = centers[snake.lane];
+    let headX = snake.segments[0].x;
+    headX += (targetX - headX) * 0.2;
+    snake.segments[0].x = headX;
 
     // follow head for other segments
     for (let i = 1; i < snake.segments.length; i++) {
@@ -137,21 +138,21 @@ function update(dt) {
     // keep adding segments until length
     while (snake.segments.length < snake.length) {
         let lastSeg = snake.segments[snake.segments.length - 1];
-        snake.segments.push({ x: lastSeg.x - (snake.size + 2), y: lastSeg.y });
+        snake.segments.push({ x: lastSeg.x, y: lastSeg.y + (snake.size + 2) });
     }
 
     // collision with objects
     for (let i = objects.length - 1; i >= 0; i--) {
         let o = objects[i];
-        let dx = (o.x - snake.segments[0].x);
-        let dy = (centers[o.lane] - snake.segments[0].y);
+        let dx = (snake.segments[0].x - o.x);
+        let dy = (snake.segments[0].y - o.y);
         if (Math.hypot(dx, dy) < o.r + snake.size) {
             if (o.type === 'point') {
                 objects.splice(i, 1);
-                snake.length += 1; game.score += 10; resetSegments();
+                snake.length += 1; game.score += 10;
             } else if (o.type === 'big') {
                 objects.splice(i, 1);
-                snake.length += 4; game.score += 50; resetSegments();
+                snake.length += 4; game.score += 50;
             }
         }
     }
@@ -181,7 +182,10 @@ function drawRoad() {
         // lane separators
         if (i < lanes - 1) {
             ctx.setLineDash([40, 20]);
-            ctx.beginPath(); ctx.moveTo(0, (i + 1) * laneHeight); ctx.lineTo(W, (i + 1) * laneHeight); ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo((i + 1) * laneWidth, 0);
+            ctx.lineTo((i + 1) * laneWidth, H);
+            ctx.stroke();
         }
     }
     ctx.setLineDash([]);
@@ -189,11 +193,10 @@ function drawRoad() {
 
 function drawObjects() {
     objects.forEach(o => {
-        let y = centers[o.lane];
         if (o.type === 'point') {
-            ctx.fillStyle = '#ffdd00'; ctx.beginPath(); ctx.arc(o.x, y, o.r, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#ffdd00'; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
         } else if (o.type === 'big') {
-            ctx.fillStyle = '#ff00aa'; ctx.beginPath(); ctx.arc(o.x, y, o.r, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#ff00aa'; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill();
             ctx.strokeStyle = '#fff'; ctx.stroke();
         }
     });
@@ -206,11 +209,11 @@ function drawSnake() {
         let sz = snake.size * (1 - i / snake.segments.length * 0.6);
         ctx.fillStyle = (i === 0 ? snake.color : shadeColor(snake.color, -10 * i));
         if (snake.shape === 'car') ctx.fillStyle = '#c00';
-        ctx.beginPath(); ctx.ellipse(s.x, s.y, sz, sz * 0.7, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(s.x, s.y, sz * 0.7, sz, 0, 0, Math.PI * 2); ctx.fill();
         if (snake.type === 'cobra' && i === 0) { // hood
-            ctx.fillStyle = 'rgba(255,200,0,0.6)'; ctx.beginPath(); ctx.ellipse(s.x - 20, s.y, sz * 1.2, sz * 1.6, 0, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = 'rgba(255,200,0,0.6)'; ctx.beginPath(); ctx.ellipse(s.x, s.y + 20, sz * 1.2, sz * 1.6, 0, 0, Math.PI * 2); ctx.fill();
         }
-        if (snake.type === 'winged' && i === 0) { ctx.fillStyle = 'rgba(200,200,255,0.6)'; ctx.fillRect(s.x - 10, s.y - 30, 10, 20); ctx.fillRect(s.x - 10, s.y + 10, 10, 20); }
+        if (snake.type === 'winged' && i === 0) { ctx.fillStyle = 'rgba(200,200,255,0.6)'; ctx.fillRect(s.x - 30, s.y - 10, 20, 10); ctx.fillRect(s.x + 10, s.y - 10, 20, 10); }
     }
 }
 
